@@ -2,12 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!-- spring boot-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <!--本工程坐标-->
     <groupId>com.yx</groupId>
     <artifactId>yx-server</artifactId>
@@ -15,28 +17,73 @@
     <name>yx-server</name>
     <description>Demo project for Spring Boot</description>
 
+    <!-- 打包类型,默认为jar,含有子模块的模块自动被设置为pom -->
+    <packaging>pom</packaging>
+
+    <!-- 这里集中定义整个项目里边所有第三方依赖的版本及其他可作用于所有pom的常量 -->
     <properties>
         <java.version>1.8</java.version>
+        <project.build.sourceencoding>UTF-8</project.build.sourceencoding>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <!--docker镜像的前缀“jesse”-->
+        <docker.image.prefix>jesse</docker.image.prefix>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
+    <!-- 被聚合的子模块索引 -->
+    <modules>
+        <module>yx-common</module>
+        <module>yx-game</module>
+        <module>yx-gateway</module>
+    </modules>
 
+    <!-- 引用maven仓库源 -->
+<!--    <url>https://maven.apache.org</url>-->
+    <!--公共依赖-->
+    <dependencies>
+        <!--JUNIT-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.2.6.RELEASE</version>
             <scope>test</scope>
             <exclusions>
+                <!-- 排除自带的logback日志框架-->
                 <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--服务注册中心-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.cloud</groupId>-->
+        <!--<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
+        <!--</dependency>-->
+        <!--Nacos服务注册及发现-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--            <version>0.9.0.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+<!--            <version>0.9.0.RELEASE</version>-->
+<!--        </dependency>-->
     </dependencies>
+
+    <!-- spring-cloud所有项目依赖包版本管理  -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>

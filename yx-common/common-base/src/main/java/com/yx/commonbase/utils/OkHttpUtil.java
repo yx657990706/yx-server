@@ -126,12 +126,11 @@ public class OkHttpUtil {
         Response response = null;
         try {
             response = okHttpClient.newCall(request).execute();
-            int status = response.code();
-            if (response.isSuccessful()) {
+            if (response != null && response.isSuccessful()) {
                 return response.body().string();
             }
         } catch (Exception e) {
-            log.error("okhttp3 put error >> ex = {}", ExceptionUtils.getStackTrace(e));
+            log.error("okhttp call error, {}", ExceptionUtils.getStackTrace(e));
         } finally {
             if (response != null) {
                 response.close();

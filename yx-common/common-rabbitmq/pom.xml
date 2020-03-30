@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.yx</groupId>
-    <artifactId>common-rabittmq</artifactId>
+    <artifactId>common-rabbitmq</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>common-rabittmq</name>
+    <name>common-rabbitmq</name>
     <description>Demo project for Spring Boot</description>
 
     <dependencies>

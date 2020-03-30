@@ -27,26 +27,39 @@ public class QueueMessge implements Serializable {
     /**
      * 消息内容
      */
-    private HashMap<String, Object> content = new HashMap<String, Object>();
+    private HashMap<String, Object> msg = new HashMap<String, Object>();
 
+    /**
+     * beanName 可以通过getBean的方式获取处理类
+     */
+    public void setBeanName(String beanName) {
+        this.msg.put("beanName", beanName);
+    }
 
-    public HashMap<String, Object> getContent() {
-        return content;
+    /**
+     * jsonData json格式的字符串数据
+     */
+    public void setJsonData(String jsonData) {
+        this.msg.put("jsonData", jsonData);
+    }
+
+    public HashMap<String, Object> getMsg() {
+        return msg;
     }
 
     public void setContent(HashMap<String, Object> content) {
-        this.content = content;
+        this.msg = content;
     }
 
     public void put(String key, Object obj) {
-        this.getContent().put(key, obj);
+        this.getMsg().put(key, obj);
     }
 
     public Object get(String key) {
-        return this.getContent().get(key);
+        return this.getMsg().get(key);
     }
 
     public String toJsonString() {
-        return JSON.toJSONString(content);
+        return JSON.toJSONString(msg);
     }
 }

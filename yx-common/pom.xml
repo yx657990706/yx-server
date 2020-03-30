@@ -25,6 +25,7 @@
         <module>common-base</module>
         <module>common-redis</module>
         <module>common-mvc</module>
+        <module>common-rabbitmq</module>
 <!--        <module>common-elasticsearch</module>-->
 <!--        <module>common-mongodb</module>-->
 <!--        <module>common-mybatis</module>-->

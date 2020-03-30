@@ -74,7 +74,6 @@ public class RabbitConnectionConfig implements RabbitTemplate.ConfirmCallback, R
     @ConfigurationProperties(prefix = "report.rabbitmq")
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        //connectionFactory.setPublisherConfirms(true);
         //设置消息发送ack，默认是none
         connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.CORRELATED);
         connectionFactory.setPublisherReturns(true);

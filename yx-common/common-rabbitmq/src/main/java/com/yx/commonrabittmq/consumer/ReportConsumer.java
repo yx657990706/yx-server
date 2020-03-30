@@ -15,14 +15,14 @@ import java.util.HashMap;
 @Slf4j
 //@Component
 //@RabbitListener(queues = "${report.queue}", containerFactory = "ReportListenerContainerFactory", admin = "ReportRabbitAdmin")
-public class Consumer {
+public class ReportConsumer {
 
     private final ApplicationContext applicationContext;
 
     private static MsgEnum[] onlyEvents = {MsgEnum.Recharge, MsgEnum.Betting, MsgEnum.UpAmount, MsgEnum.AddCoin,MsgEnum.Withdraw};
 
     @Autowired
-    public Consumer(ApplicationContext applicationContext) {
+    public ReportConsumer(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

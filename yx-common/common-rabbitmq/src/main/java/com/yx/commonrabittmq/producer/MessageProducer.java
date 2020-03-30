@@ -8,6 +8,7 @@ import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,16 +33,37 @@ public class MessageProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Value("${report.exchange}")
+    private String exchange;
+
+    @Value("${report.routekey}")
+    private String routeKey;
+
     /**
      * 发送队列消息到指定的exchange
      *
-     * @param queueKey
+     * @param routeKey
      * @param msg
      * @return
      */
-    public boolean convertAndSend(String exchange, String queueKey, QueueMessge msg) {
+    public boolean convertAndSend(String exchange, String routeKey, QueueMessge msg) {
         try {
-            rabbitTemplate.convertAndSend(exchange, queueKey, msg);
+            rabbitTemplate.convertAndSend(exchange, routeKey, msg);
+            return true;
+        } catch (Exception e) {
+            log.error("===>>MQ异常", e);
+            return false;
+        }
+    }
+
+    /**
+     * 定制的send
+     * @param msg
+     * @return
+     */
+    public boolean reportSend(QueueMessge msg) {
+        try {
+            rabbitTemplate.convertAndSend(exchange, routeKey, msg);
             return true;
         } catch (Exception e) {
             log.error("===>>MQ异常", e);

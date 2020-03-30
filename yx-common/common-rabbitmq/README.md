@@ -10,6 +10,7 @@ Producer
 MessageProducer 
 1.exchange和routeKey动态传入，灵活。
 2.提供通用发送方法和延迟发送方法
+3.可以注入exchange和routeKey，定制不同的个性化生产者
 
 
 #### RabbitConnectionConfig

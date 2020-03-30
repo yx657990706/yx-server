@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @Component
-public class Producer implements MessagePostProcessor {
+public class ReportProducer implements MessagePostProcessor {
 
     @Value("${report.pool-size:2}")
     private int poolSize;
@@ -60,7 +60,7 @@ public class Producer implements MessagePostProcessor {
      * @param rabbitTemplate RabbitTemplate
      */
     @Autowired
-    public Producer(RabbitTemplate rabbitTemplate) {
+    public ReportProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
@@ -84,7 +84,7 @@ public class Producer implements MessagePostProcessor {
     protected void registerShutdown() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             log.info("report queue shutdown...");
-            Producer.this.senderPool.shutdown();
+            ReportProducer.this.senderPool.shutdown();
         }));
     }
 
@@ -162,9 +162,9 @@ public class Producer implements MessagePostProcessor {
     @Override
     public Message postProcessMessage(Message message) throws AmqpException {
         message.getMessageProperties().setTimestamp(new Date());
-        message.getMessageProperties().setContentType(Producer.this.contentType);
+        message.getMessageProperties().setContentType(ReportProducer.this.contentType);
         message.getMessageProperties().setMessageId(UUID.randomUUID().toString());
-        message.getMessageProperties().setDeliveryMode(Producer.this.deliveryMode);
+        message.getMessageProperties().setDeliveryMode(ReportProducer.this.deliveryMode);
         return message;
     }
 
@@ -177,27 +177,27 @@ public class Producer implements MessagePostProcessor {
         public void run() {
             try {
                 while (true) {
-                    final Event event = Producer.this.events.take();
+                    final Event event = ReportProducer.this.events.take();
                     Object message = event.getEvent();
                     try {
                         // try send message
                         log.info("重试发送消息:msg:{}", message);
-                        String exchange = Producer.this.exchange;
-                        String routingKey = Producer.this.routeKey;
-                        Producer.this.rabbitTemplate.convertAndSend(exchange, routingKey, message, Producer.this);
+                        String exchange = ReportProducer.this.exchange;
+                        String routingKey = ReportProducer.this.routeKey;
+                        ReportProducer.this.rabbitTemplate.convertAndSend(exchange, routingKey, message, ReportProducer.this);
                     } catch (AmqpException e) {
                         int retries = event.incrementRetries();
-                        if (retries < Producer.this.maxRetry) {
+                        if (retries < ReportProducer.this.maxRetry) {
                             log.warn("retry:{}", retries);
                             // add to schedule queue
-                            Producer.this.retryTimer.schedule(new TimerTask() {
+                            ReportProducer.this.retryTimer.schedule(new TimerTask() {
                                 @Override
                                 public void run() {
-                                    Producer.this.events.add(event);
+                                    ReportProducer.this.events.add(event);
                                 }
                             }, (long) (Math.pow(retries, Math.log(retries)) * 1000));
                         } else {
-                            log.error("send message failed:{},msg:{},retry:{}", e, message.toString(), Producer.this.maxRetry);
+                            log.error("send message failed:{},msg:{},retry:{}", e, message.toString(), ReportProducer.this.maxRetry);
                         }
                     }
                 }

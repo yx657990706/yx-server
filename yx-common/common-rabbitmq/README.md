@@ -12,6 +12,10 @@ MessageProducer
 2.提供通用发送方法和延迟发送方法
 3.可以注入exchange和routeKey，定制不同的个性化生产者
 
+消费者在自己的工程实现，需要实现QueueMessageHandler接口。MessgeConsumer会根据beanName自行分配
+业务处理的实际消费者。QueueMessge是消息传输对象，其中的beanName设置实际消费者。jsonData是json
+格式的数据，即实际需要处理的业务数据
+
 
 #### RabbitConnectionConfig
 MQ的连接配置，包括消息转换器、连接工厂、监听、rabbitTemplate和admin。

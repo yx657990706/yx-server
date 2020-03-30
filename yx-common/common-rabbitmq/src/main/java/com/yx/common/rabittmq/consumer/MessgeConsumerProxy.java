@@ -3,7 +3,7 @@ package com.yx.common.rabittmq.consumer;
 import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
 import com.yx.common.rabittmq.modle.QueueMessge;
-import com.yx.common.rabittmq.service.QueueMessageHandler;
+import com.yx.common.rabittmq.service.QueueMessageConsumerHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -33,11 +33,11 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class MessgeConsumer {
+public class MessgeConsumerProxy {
 
 
     @Autowired
-    private Map<String, QueueMessageHandler> queueMessageServiceMap;
+    private Map<String, QueueMessageConsumerHandler> queueMessageConsumerHandlerMap;
 //    @Autowired
 //    private  ApplicationContext applicationContext;
 
@@ -50,13 +50,13 @@ public class MessgeConsumer {
             final Object o = content.get("beanName");
 //            final Object bean = applicationContext.getBean(o.toString());
 //            QueueMessageService dealBizQueueService = (QueueMessageService) bean;
-            QueueMessageHandler dealBizQueueService = queueMessageServiceMap.get(o.toString());
-           if (dealBizQueueService == null) {
+            QueueMessageConsumerHandler queueMessageConsumerHandler = queueMessageConsumerHandlerMap.get(o.toString());
+           if (queueMessageConsumerHandler == null) {
                channel.basicReject(tag, false);
                log.debug("consumer error,no handler,beanName:{}",o.toString());
                return;
             }
-            dealBizQueueService.process(queueMessge);
+            queueMessageConsumerHandler.process(queueMessge);
             channel.basicAck(tag, false);
             log.debug("===>>consumer 消息处理完成");
         } catch (Throwable e) {

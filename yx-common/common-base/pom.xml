@@ -53,11 +53,11 @@
             <version>1.60</version>
         </dependency>
         <!--配置文件加解密组件jasypt-->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.ulisesbocchio</groupId>-->
+<!--            <artifactId>jasypt-spring-boot-starter</artifactId>-->
+<!--            <version>2.1.0</version>-->
+<!--        </dependency>-->
         <!--JWT-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

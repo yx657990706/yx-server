@@ -25,6 +25,8 @@
         <java.version>1.8</java.version>
         <project.build.sourceencoding>UTF-8</project.build.sourceencoding>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <nacos.starter.version>2.2.0.RELEASE</nacos.starter.version>
+        <nacos.discovery.starter.version>2.2.0.RELEASE</nacos.discovery.starter.version>
         <!--docker镜像的前缀“jesse”-->
         <docker.image.prefix>jesse</docker.image.prefix>
     </properties>
@@ -37,7 +39,7 @@
     </modules>
 
     <!-- 引用maven仓库源 -->
-<!--    <url>https://maven.apache.org</url>-->
+    <!--    <url>https://maven.apache.org</url>-->
     <!--公共依赖-->
     <dependencies>
         <!--JUNIT-->
@@ -46,13 +48,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <version>2.2.6.RELEASE</version>
             <scope>test</scope>
-<!--            <exclusions>-->
-<!--                &lt;!&ndash; 排除自带的logback日志框架&ndash;&gt;-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-logging</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
         <!--lombok-->
         <dependency>
@@ -60,11 +55,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
         </dependency>
-        <!--服务注册中心-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
-        <!--</dependency>-->
         <!--Nacos服务注册及发现-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
@@ -76,6 +66,64 @@
 <!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
 <!--            <version>0.9.0.RELEASE</version>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>${nacos.discovery.starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-codec</artifactId>
+                    <groupId>commons-codec</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${nacos.starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <!-- spring-cloud所有项目依赖包版本管理  -->

@@ -34,7 +34,7 @@ public class ProduceController {
         queueMessge.setJsonData(bank);
 
         //发送消息到rabbitMQ队列
-        final boolean b = sender.convertAndSend("yx-report-exchange", "yx-report-routekey", queueMessge);
+        final boolean b = sender.convertAndSend("test101-report-exchange", "test101-report-routekey", queueMessge);
         log.info("队列推送结果===>>{}", b);
         return "ok";
     }

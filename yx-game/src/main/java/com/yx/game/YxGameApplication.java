@@ -2,7 +2,9 @@ package com.yx.game;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+@EnableDiscoveryClient
 //扫描引用的common配置
 @SpringBootApplication(scanBasePackages = {"com.yx.common", "com.yx.game"})
 public class YxGameApplication {

@@ -2,7 +2,7 @@ package com.yx.common.rabittmq.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.yx.common.rabittmq.modle.QueueMessge;
-import com.yx.common.rabittmq.service.QueueMessageService;
+import com.yx.common.rabittmq.service.QueueMessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.HashMap;
  **/
 @Slf4j
 @Service("queueMessageService01")
-public class QueueMessageServiceImpl implements QueueMessageService {
+public class QueueMessageHandlerImpl implements QueueMessageHandler {
     @Override
     public void process(QueueMessge queueMessge) {
         try {

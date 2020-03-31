@@ -20,9 +20,9 @@ import java.util.Set;
  * @author jesse
  * @since 2018-12-15
  */
-@Component
-@WebFilter(urlPatterns = "/*", filterName = "corsFilter")
-@Order(value = 1)
+//@Component
+//@WebFilter(urlPatterns = "/*", filterName = "corsFilter")
+//@Order(value = 1)
 public class CorsFilter implements Filter {
 
     @Override
@@ -42,7 +42,7 @@ public class CorsFilter implements Filter {
         //白名单
         String[] allowDomain = {
                 s + "://localhost:8089",
-                s + "://localhost:8080",
+                s + "://localhost:9088",
                 s + "://localhost:8888",
                 "http://www.baidu111.com"
         };

@@ -1,10 +1,12 @@
-package com.yx.commonredis.config;
+package com.yx.common.redis.config;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -23,6 +25,8 @@ public class RedissonManagerConfig {
     private String host;
     @Value("${spring.redis.port}")
     private int port;
+    @Value("${spring.redis.password}")
+    private String password;
     @Value("${spring.redis.cluster.nodes}")
     private String clusterNodes;
 
@@ -32,16 +36,17 @@ public class RedissonManagerConfig {
      *
      * @return
      */
-    //@Bean
+    @Bean
     public RedissonClient redissonSingle() {
-        log.info("========Redission初始化！！========");
         log.info("========Redission地址：" + host + ":" + port);
-        RedissonClient redisson = Redisson.create();
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://"+host + ":" + port);
-        redisson = Redisson.create(config);
-
-        //可通过打印redisson.getConfig().toJSON().toString()来检测是否配置成功
+        config.useSingleServer()
+                .setAddress("redis://"+host + ":" + port)
+                .setPassword(password);
+        RedissonClient redisson = Redisson.create(config);
+        log.debug("========Redission初始化成功========");
+        log.debug("redission config:{}", JSON.toJSONString(redisson.getConfig()));
+        //可通过打印JSON.toJSONString(redisson.getConfig())来检测是否配置成功
         return redisson;
     }
 

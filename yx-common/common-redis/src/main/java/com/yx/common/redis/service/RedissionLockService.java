@@ -1,4 +1,4 @@
-package com.yx.commonredis.service;
+package com.yx.common.redis.service;
 
 import org.redisson.api.RLock;
 

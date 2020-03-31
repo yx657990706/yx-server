@@ -1,9 +1,10 @@
-package com.yx.commonredis.service.impl;
+package com.yx.common.redis.service.impl;
 
-import com.yx.commonredis.service.RedissionLockService;
+import com.yx.common.redis.service.RedissionLockService;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @time 2019/7/15 3:35 PM
  * @Description
  */
+@Primary
 @Component
 public class RedissionLockServiceImpl implements RedissionLockService {
 

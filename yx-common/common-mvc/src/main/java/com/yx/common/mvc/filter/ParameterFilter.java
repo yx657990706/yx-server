@@ -16,9 +16,9 @@ import java.io.IOException;
  * 这里负责将所有公共的Header中的参数放到Request对象中
  * 在Controller的方法中可以直接注入Header中的参数
  */
-@Slf4j
-@Component
-@WebFilter(urlPatterns = "/*")
+//@Slf4j
+//@Component
+//@WebFilter(urlPatterns = "/*")
 public class ParameterFilter implements Filter {
 
     @Override

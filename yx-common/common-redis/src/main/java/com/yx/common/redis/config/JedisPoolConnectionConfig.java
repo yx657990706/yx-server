@@ -1,5 +1,6 @@
-package com.yx.commonredis.config;
+package com.yx.common.redis.config;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,9 @@ public class JedisPoolConnectionConfig extends CachingConfigurerSupport {
     @Value("${spring.redis.port}")
     private int port;
 
+    @Value("${spring.redis.password}")
+    private String password;
+
     @Value("${spring.redis.timeout}")
     private int timeout;
 
@@ -49,7 +53,6 @@ public class JedisPoolConnectionConfig extends CachingConfigurerSupport {
      */
     @Bean
     public JedisPool redisPoolFactory() {
-        log.info("========JedisPool注入成功！！========");
         log.info("========redis地址：" + host + ":" + port);
         // 建立连接池配置参数
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -57,9 +60,15 @@ public class JedisPoolConnectionConfig extends CachingConfigurerSupport {
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis); // 设置最大阻塞时间，记住是毫秒数milliseconds
 
         // 创建连接池
-        // JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,password);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port);
-
+        JedisPool jedisPool;
+        if(StringUtils.isBlank(password)){
+            log.debug("========redis 免密连接========");
+            jedisPool = new JedisPool(jedisPoolConfig, host, port);
+        }else{
+            log.debug("========redis 认证连接========");
+            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,password);
+        }
+        log.info("========redis连接成功！！========");
         return jedisPool;
     }
 
@@ -104,7 +113,7 @@ public class JedisPoolConnectionConfig extends CachingConfigurerSupport {
                         sb.append("null");
                     }
                 }
-                log.info("===>>keyGenerator=" + sb.toString());
+                log.debug("===>>keyGenerator=" + sb.toString());
                 return sb.toString();
             }
         };

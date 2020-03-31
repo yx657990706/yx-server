@@ -1,4 +1,4 @@
-package com.yx.commonredis.enums;
+package com.yx.common.redis.enums;
 
 public enum EnumRegion {
 

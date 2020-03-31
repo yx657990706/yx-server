@@ -1,7 +1,6 @@
-package com.yx.commonredis.service;
+package com.yx.common.redis.service;
 
-import com.yx.commonredis.enums.EnumRegion;
-import redis.clients.jedis.Jedis;
+import com.yx.common.redis.enums.EnumRegion;
 
 import java.util.Set;
 

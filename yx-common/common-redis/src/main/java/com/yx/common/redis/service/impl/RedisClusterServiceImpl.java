@@ -1,7 +1,7 @@
-package com.yx.commonredis.service.impl;
+package com.yx.common.redis.service.impl;
 
-import com.yx.commonredis.enums.EnumRegion;
-import com.yx.commonredis.service.RedisService;
+import com.yx.common.redis.enums.EnumRegion;
+import com.yx.common.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.JedisCluster;

@@ -105,11 +105,6 @@
             <!--swagger2 API 暴露接口给前端测试-->
             <version>1.9.4</version>
         </dependency>
-        <!--使 bootstrap.properties 配置文件生效 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-context</artifactId>
-        </dependency>
     </dependencies>
 
 

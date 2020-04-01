@@ -17,10 +17,17 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
-        <!-- mysql的springboot支持-->
+        <!-- mybatis的springboot支持-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        <!-- tk-->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.1.5</version>
         </dependency>
         <!-- mysql驱动 -->
         <dependency>

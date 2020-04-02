@@ -7,6 +7,7 @@ import com.yx.common.rabittmq.modle.QueueMessge;
 import com.yx.common.rabittmq.modle.TestReport;
 import com.yx.common.rabittmq.producer.MessageProducer;
 import com.yx.common.rabittmq.producer.ReportProducer;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 @Slf4j
+@Api(tags = "rabbit测试")
 @RestController
 public class ProduceController {
 

@@ -5,6 +5,7 @@ import com.yx.common.mvc.utils.ResponseUtil;
 import com.yx.common.redis.enums.EnumRegion;
 import com.yx.common.redis.service.RedisService;
 import com.yx.common.redis.service.RedissionLockService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 3/31/20 1:30 下午
  **/
 @Slf4j
+@Api(tags = "redis测试")
 @RestController
 public class RedisTestController {
 

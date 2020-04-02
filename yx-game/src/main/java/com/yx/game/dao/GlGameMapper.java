@@ -22,4 +22,11 @@ public interface GlGameMapper extends BasicMapper<GlGame> {
     @Select("select * from gl_game where game_id=#{gameId} ")
     GlGame findOne(@Param("gameId") Integer gameId);
 
+    /**
+     * xml查询测试
+     * @return
+     */
+    GlGame seleectByTest();
+
+    GlGame seleectByTest2();
 }

@@ -93,17 +93,22 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>io.springfox</groupId>-->
-        <!--<artifactId>springfox-swagger-ui</artifactId>-->
-        <!--<version>2.9.2</version>-->
-        <!--</dependency>-->
-        <!--swagger-ui 升级成界面更好看的ui-->
+<!--        &lt;!&ndash;<dependency>&ndash;&gt;-->
+<!--        &lt;!&ndash;<groupId>io.springfox</groupId>&ndash;&gt;-->
+<!--        &lt;!&ndash;<artifactId>springfox-swagger-ui</artifactId>&ndash;&gt;-->
+<!--        &lt;!&ndash;<version>2.9.2</version>&ndash;&gt;-->
+<!--        &lt;!&ndash;</dependency>&ndash;&gt;-->
+<!--        &lt;!&ndash;swagger-ui 升级成界面更好看的ui&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.github.xiaoymin</groupId>-->
+<!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
+<!--            &lt;!&ndash;swagger2 API 暴露接口给前端测试&ndash;&gt;-->
+<!--            <version>1.9.4</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <!--swagger2 API 暴露接口给前端测试-->
-            <version>1.9.4</version>
+            <artifactId>knife4j-spring-ui</artifactId>
+            <version>2.0.2</version>
         </dependency>
     </dependencies>
 

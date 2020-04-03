@@ -12,6 +12,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,40 +29,63 @@ import java.util.List;
  * 版本       修改人         修改时间         修改内容描述
  * --------------------------------------------------
  * <p> swagger-ui 访问地址：http://localhost:8080/swagger-ui.html
- * <p> swagger-bootstrap-ui访问地址：http://localhost:8080/doc.html
+ * <p> knife4j 访问地址：http://${host}:${port}/doc.html
+ *
+ * #注意事项
  * --------------------------------------------------
  * </pre>
  */
 @Configuration
+@EnableSwagger2
 public class Swagger2Config {
 
+    //    @Bean
+//    public Docket createRestApi() {
+//
+//        //请求header中包含token
+//        ParameterBuilder tokenPar = new ParameterBuilder();
+//        List<Parameter> pars = new ArrayList<Parameter>();
+//        tokenPar.name(TokenConstant.TOKEN_HEADER_KEY).description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+//        pars.add(tokenPar.build());
+//
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .apiInfo(apiInfo())
+//                .select()
+//                .apis(RequestHandlerSelectors.basePackage("com.jesse.rest"))
+//                .paths(PathSelectors.any())
+//                //TODO 生产环境需要关闭
+////              .apis(RequestHandlerSelectors.basePackage(""))
+////              .paths(PathSelectors.none())//关闭swagger
+//                .build()
+//                .globalOperationParameters(pars);
+//    }
+//
+//    private ApiInfo apiInfo() {
+//        return new ApiInfoBuilder()
+//                .title("springboot利用swagger构建api文档")
+//                .description("简单优雅的restful风格")
+////                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
+//                .version("1.0")
+//                .build();
+//    }
     @Bean
     public Docket createRestApi() {
-
-        //请求header中包含token
-        ParameterBuilder tokenPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<Parameter>();
-        tokenPar.name(TokenConstant.TOKEN_HEADER_KEY).description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
-        pars.add(tokenPar.build());
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jesse.rest"))
+                .apis(RequestHandlerSelectors.basePackage("com.yx"))
                 .paths(PathSelectors.any())
-                //TODO 生产环境需要关闭
-//              .apis(RequestHandlerSelectors.basePackage(""))
-//              .paths(PathSelectors.none())//关闭swagger
-                .build()
-                .globalOperationParameters(pars);
+                .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("springboot利用swagger构建api文档")
-                .description("简单优雅的restful风格")
-//                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
+                .title("swagger-bootstrap-ui RESTful APIs")
+                .description("swagger-bootstrap-ui")
+                .termsOfServiceUrl("http://localhost:8999/")
                 .version("1.0")
                 .build();
     }
+
+
 }

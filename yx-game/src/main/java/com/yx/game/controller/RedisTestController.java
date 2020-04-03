@@ -1,5 +1,6 @@
 package com.yx.game.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.yx.common.mvc.model.GlobalResponse;
 import com.yx.common.mvc.utils.ResponseUtil;
 import com.yx.common.redis.enums.EnumRegion;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 @Slf4j
 @Api(tags = "redis测试")
+@ApiSort(2)
 @RestController
 public class RedisTestController {
 

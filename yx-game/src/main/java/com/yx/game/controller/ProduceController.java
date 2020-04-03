@@ -1,5 +1,6 @@
 package com.yx.game.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.yx.common.rabittmq.enums.MsgEnum;
 import com.yx.common.rabittmq.enums.PlatformEnum;
 import com.yx.common.rabittmq.enums.UserTypeEnum;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 @Slf4j
 @Api(tags = "rabbit测试")
+@ApiSort(3)
 @RestController
 public class ProduceController {
 

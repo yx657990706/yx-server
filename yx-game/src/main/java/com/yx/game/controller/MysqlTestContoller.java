@@ -1,11 +1,14 @@
 package com.yx.game.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.yx.common.mvc.model.GlobalResponse;
 import com.yx.common.mvc.utils.ResponseUtil;
 import com.yx.game.dao.GlGameMapper;
 import com.yx.game.model.GlGame;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +24,7 @@ import java.util.List;
  **/
 @Slf4j
 @Api(tags = "mysql测试")
+@ApiSort(1)//接口分组排序
 @RestController
 public class MysqlTestContoller {
 
@@ -28,6 +32,8 @@ public class MysqlTestContoller {
     private GlGameMapper glGameMapper;
 
     @GetMapping(value = "/testmysql")
+    @ApiOperation(value = "mysql接口第2步")
+    @ApiOperationSupport(order=2)//接口排序
     public GlobalResponse printgetsql() {
 
         GlGame one = glGameMapper.findOne(20065);
@@ -37,6 +43,8 @@ public class MysqlTestContoller {
         return ResponseUtil.success();
     }
 
+    @ApiOperationSupport(order=1)//接口排序
+    @ApiOperation(value = "mysql接口第1步")
     @GetMapping(value = "/testmysql2")
     public GlobalResponse printgetsql2() {
 

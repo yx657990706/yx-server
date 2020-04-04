@@ -33,20 +33,20 @@ public class MysqlTestContoller {
 
     @GetMapping(value = "/testmysql")
     @ApiOperation(value = "mysql接口第2步")
-    @ApiOperationSupport(order=2)//接口排序
-    public GlobalResponse printgetsql() {
+    @ApiOperationSupport(order=22)//接口排序
+    public GlobalResponse<List<GlGame>> printgetsql() {
 
         GlGame one = glGameMapper.findOne(20065);
         log.info("===>>{}", JSON.toJSONString(one));
         List<GlGame> glGames = glGameMapper.selectByIds("1,2,3");
         log.info("===>>glGames:{}", JSON.toJSONString(glGames));
-        return ResponseUtil.success();
+        return ResponseUtil.success(glGames);
     }
 
     @ApiOperationSupport(order=1)//接口排序
-    @ApiOperation(value = "mysql接口第1步")
+    @ApiOperation(value = "mysql接口第1步",notes = "测试notes的作用")
     @GetMapping(value = "/testmysql2")
-    public GlobalResponse printgetsql2() {
+    public GlobalResponse<GlGame> printgetsql2() {
 
         //1.xml查询
         GlGame one = glGameMapper.seleectByTest();
@@ -73,7 +73,7 @@ public class MysqlTestContoller {
         List<GlGame> glGames2 = glGameMapper.selectByExample(example);
         log.info("===>>glGames2:{}", JSON.toJSONString(glGames2));
 
-        return ResponseUtil.success();
+        return ResponseUtil.success(one2);
     }
 
 }

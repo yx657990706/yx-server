@@ -1,18 +1,23 @@
 package com.yx.common.mvc.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class GlobalResponse<T> {
 
 	/**
-	 * 错误码
+	 * 结果码
 	 */
+	@ApiModelProperty(value = "结果码")
 	private String code;
 	/**
-	 * 提示信息
+	 * 描述
 	 */
+	@ApiModelProperty(value = "描述")
 	private String msg;
 	/**
-	 * 数据内容
+	 * 返回数据
 	 */
+	@ApiModelProperty(value = "返回对象")
 	private T data;
 
     public GlobalResponse(){

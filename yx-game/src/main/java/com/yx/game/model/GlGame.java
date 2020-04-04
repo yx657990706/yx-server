@@ -1,5 +1,7 @@
 package com.yx.game.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +16,6 @@ import java.util.Date;
 @Table(name = "gl_game")
 @Setter
 @Getter
-@NoArgsConstructor
-@ToString
 public class GlGame implements Serializable {
 	
 	private static final long serialVersionUID = 5199692580550320944L;
@@ -25,18 +25,21 @@ public class GlGame implements Serializable {
      */
     @Id
     @Column(name = "game_id")
+    @ApiModelProperty(value = "游戏id")
     private Integer gameId;
 
     /**
      * 游戏类型：0彩票，1真人，2体育，3老虎机，4捕鱼，5电竞
      */
     @Column(name = "game_type")
+    @ApiModelProperty(value = "游戏类型：0彩票，1真人，2体育，3老虎机，4捕鱼，5电竞")
     private Integer gameType;
 
     /**
      * 游戏子类型：0其他，1电动老虎机，2经典老虎机，3刮刮乐，4棋牌游戏，5街机游戏
      */
     @Column(name = "sub_type")
+    @ApiModelProperty(value = "游戏子类型：0其他，1电动老虎机，2经典老虎机，3刮刮乐，4棋牌游戏，5街机游戏")
     private Integer subType;
 
     /**

@@ -40,7 +40,7 @@ import java.util.List;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class Swagger2Config {
 
-    @Value("${dynamic.base.isPro:false}")
+    @Value("${yx.base.isPro:false}")
     private boolean IS_PRO;
 
     @Bean

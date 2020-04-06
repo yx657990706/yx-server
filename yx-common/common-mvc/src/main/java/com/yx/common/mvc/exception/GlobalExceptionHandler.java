@@ -1,8 +1,8 @@
 package com.yx.common.mvc.exception;
 
-import com.yx.common.mvc.exception.enums.EnumExceptionResult;
-import com.yx.common.mvc.model.GlobalResponse;
-import com.yx.common.mvc.utils.ResponseUtil;
+import com.yx.common.base.enums.EnumResponseCode;
+import com.yx.common.base.restful.GlobalResponse;
+import com.yx.common.base.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,17 +26,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value=Exception.class)
+
+    @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public GlobalResponse handle(Exception e) {
-        if(e instanceof ServiceException) {
+        if (e instanceof ServiceException) {
             ServiceException serviceException = (ServiceException) e;
-            log.error("自定义异常 {}:{}", serviceException.getCode(),e.getMessage(),e);
+            log.error("自定义异常 {}:{}", serviceException.getCode(), e.getMessage(), e);
             return ResponseUtil.error(serviceException.getCode(), serviceException.getMessage());
-        }else {
+        } else {
             //日志记录异常信息,便于排查问题
-            log.error("系统异常 {}:{}", EnumExceptionResult.ERROR_UNKOWN.getCode(),e.getMessage(),e);
-            return ResponseUtil.error(EnumExceptionResult.ERROR_UNKOWN.getCode(),EnumExceptionResult.ERROR_UNKOWN.getMsg());
+            log.error("系统异常 {}:{}", EnumResponseCode.SERVER_ERROR_CODE.getCode(), e.getMessage(), e);
+            return ResponseUtil.error(EnumResponseCode.SERVER_ERROR_CODE);
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.yx.game.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
-import com.yx.common.mvc.model.GlobalResponse;
-import com.yx.common.mvc.utils.ResponseUtil;
+import com.yx.common.base.restful.GlobalResponse;
+import com.yx.common.base.utils.ResponseUtil;
 import com.yx.game.handler.DynamicValueHandler;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

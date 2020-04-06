@@ -1,6 +1,6 @@
 package com.yx.common.mvc.exception;
 
-import com.yx.common.mvc.exception.enums.EnumExceptionResult;
+import com.yx.common.base.enums.EnumResponseCode;
 import lombok.Data;
 
 @Data
@@ -9,7 +9,7 @@ public class ServiceException extends RuntimeException {
 	/**
 	 * 代码
 	 */
-	private String code;
+	private Integer code;
 	/**
 	 * 消息
 	 */
@@ -22,7 +22,7 @@ public class ServiceException extends RuntimeException {
 	 * @param code
 	 * @param msg
 	 */
-	public ServiceException(String code, String msg) {
+	public ServiceException(Integer code, String msg) {
 		super(msg);
 		this.code = code;
 	}
@@ -30,7 +30,7 @@ public class ServiceException extends RuntimeException {
 	 * 构造方法二(传入枚举)
 	 * @param resltEnum
 	 */
-	public ServiceException(EnumExceptionResult resltEnum) {
+	public ServiceException(EnumResponseCode resltEnum) {
 		super(resltEnum.getMsg());
 		this.code = resltEnum.getCode();
 	}

@@ -152,11 +152,11 @@ public class AesJwtUtil {
      * JWT信息封装类
      */
     public static class JWTResult {
-        private boolean status;
+        private Boolean status;
         private String uid;//用户Id
         private String msg;
         private String loginInfo;//登录信息
-        private int code;
+        private Integer code;
 
         public JWTResult() {
             super();

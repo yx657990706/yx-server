@@ -16,7 +16,13 @@
 <!--    <description>Demo project for Spring Boot</description>-->
 
     <dependencies>
-
+        <!--使 bootstrap.properties 配置文件生效 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.2.2.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
         <!--apache常用工具类-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -88,33 +94,11 @@
             <artifactId>okhttp</artifactId>
             <version>3.14.7</version>
         </dependency>
+        <!--  swagger2 API 暴露接口给前端测试 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
-        </dependency>
-<!--        &lt;!&ndash;<dependency>&ndash;&gt;-->
-<!--        &lt;!&ndash;<groupId>io.springfox</groupId>&ndash;&gt;-->
-<!--        &lt;!&ndash;<artifactId>springfox-swagger-ui</artifactId>&ndash;&gt;-->
-<!--        &lt;!&ndash;<version>2.9.2</version>&ndash;&gt;-->
-<!--        &lt;!&ndash;</dependency>&ndash;&gt;-->
-<!--        &lt;!&ndash;swagger-ui 升级成界面更好看的ui&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
-<!--            &lt;!&ndash;swagger2 API 暴露接口给前端测试&ndash;&gt;-->
-<!--            <version>1.9.4</version>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-ui</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-        <!-- 文档排序增强 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>2.0.2</version>
         </dependency>
     </dependencies>
 

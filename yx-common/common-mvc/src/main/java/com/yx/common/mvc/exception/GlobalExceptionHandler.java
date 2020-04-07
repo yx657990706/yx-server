@@ -2,7 +2,7 @@ package com.yx.common.mvc.exception;
 
 import com.yx.common.base.enums.EnumResponseCode;
 import com.yx.common.base.restful.GlobalResponse;
-import com.yx.common.base.utils.ResponseUtil;
+import com.yx.common.mvc.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

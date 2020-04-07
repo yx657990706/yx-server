@@ -1,4 +1,4 @@
-package com.yx.common.base.utils;
+package com.yx.common.mvc.utils;
 
 
 import com.yx.common.base.enums.EnumResponseCode;

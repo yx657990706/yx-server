@@ -21,11 +21,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        <!--使 bootstrap.properties 配置文件生效 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-context</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.yx</groupId>
             <artifactId>common-mysql</artifactId>

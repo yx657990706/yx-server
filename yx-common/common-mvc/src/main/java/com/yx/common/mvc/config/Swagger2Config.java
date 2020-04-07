@@ -1,4 +1,4 @@
-package com.yx.common.base.config;
+package com.yx.common.mvc.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.yx.common.base.constant.TokenConstant;

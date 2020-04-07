@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.yx.common.base.restful.GlobalResponse;
-import com.yx.common.base.utils.ResponseUtil;
+import com.yx.common.mvc.utils.ResponseUtil;
 import com.yx.game.dao.GlGameMapper;
 import com.yx.game.model.GlGame;
 import io.swagger.annotations.Api;

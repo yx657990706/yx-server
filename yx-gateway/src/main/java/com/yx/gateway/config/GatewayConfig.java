@@ -69,14 +69,14 @@ public class GatewayConfig {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SentinelGatewayBlockExceptionHandler sentinelGatewayBlockExceptionHandler() {
+    public SentinelGatewayBlockExceptionHandler foreheadSentinelGatewayBlockExceptionHandler() {
         // Register the block exception handler for Spring Cloud Gateway.
         return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
     }
 
     @Bean
     @Order(-1)
-    public GlobalFilter sentinelGatewayFilter() {
+    public GlobalFilter foreheadSentinelGatewayFilter() {
         return new SentinelGatewayFilter();
     }
 

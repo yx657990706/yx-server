@@ -42,7 +42,7 @@ import java.util.Set;
  */
 @Slf4j
 @Configuration
-public class GatewayConfiguration {
+public class GatewayConfig {
 
     /**
      * API定义配置DataID
@@ -62,7 +62,7 @@ public class GatewayConfiguration {
     private final List<ViewResolver> viewResolvers;
     private final ServerCodecConfigurer serverCodecConfigurer;
 
-    public GatewayConfiguration(ObjectProvider<List<ViewResolver>> viewResolversProvider, ServerCodecConfigurer serverCodecConfigurer) {
+    public GatewayConfig(ObjectProvider<List<ViewResolver>> viewResolversProvider, ServerCodecConfigurer serverCodecConfigurer) {
         this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);
         this.serverCodecConfigurer = serverCodecConfigurer;
     }
@@ -70,29 +70,40 @@ public class GatewayConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SentinelGatewayBlockExceptionHandler sentinelGatewayBlockExceptionHandler() {
+        // Register the block exception handler for Spring Cloud Gateway.
         return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
     }
 
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @Order(-1)
     public GlobalFilter sentinelGatewayFilter() {
         return new SentinelGatewayFilter();
     }
 
     @PostConstruct
     public void init() {
-        try {
-            // API分组定义
-            ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new NacosDataSource<>(properties.getServerAddr(), properties.getGroup(), apiDefinitionDataId,  this::converterApiDefinition);
-            GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
-            // 限流规则配置加载
-            ReadableDataSource<String, Set<GatewayFlowRule>> flowRuleDataSource = new NacosDataSource<>(properties.getServerAddr(), properties.getGroup(), flowRuleDataId,  this::converterGatewayFlowRule);
-            GatewayRuleManager.register2Property(flowRuleDataSource.getProperty());
-        } catch (Exception e) {
-            log.error("GatewayConfiguration init() error", e);
-        }
-        // 设置限流自定义错误消息Handler
+        initCustomizedApis();
+        initGatewayRules();
+        // 设置限流自定义错误消息响应
         GatewayCallbackManager.setBlockHandler(new CustomerBlockRequestHandler());
+    }
+
+    /**
+     * 初始化自定义API
+     */
+    private void initCustomizedApis() {
+        // API分组定义
+        ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new NacosDataSource<>(properties.getServerAddr(), properties.getGroup(), apiDefinitionDataId, this::converterApiDefinition);
+        GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
+    }
+
+    /**
+     * 初始化网关路由规则
+     */
+    private void initGatewayRules() {
+        // 限流规则配置加载
+        ReadableDataSource<String, Set<GatewayFlowRule>> flowRuleDataSource = new NacosDataSource<>(properties.getServerAddr(), properties.getGroup(), flowRuleDataId, this::converterGatewayFlowRule);
+        GatewayRuleManager.register2Property(flowRuleDataSource.getProperty());
     }
 
     private Set<ApiDefinition> converterApiDefinition(final String source) {
@@ -159,16 +170,16 @@ public class GatewayConfiguration {
             switch (parseStrategy) {
                 case "IP":
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_CLIENT_IP);
-                break;
+                    break;
                 case "Host":
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_HOST);
-                break;
+                    break;
                 case "Header":
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_HEADER);
-                break;
+                    break;
                 case "URL":
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_URL_PARAM);
-                break;
+                    break;
             }
         }
         // 若提取策略选择 Header 模式或 URL 参数模式，则需要指定对应的 header 名称或 URL 参数名称
@@ -188,19 +199,19 @@ public class GatewayConfiguration {
                 case 0:
                     // 精确匹配
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_MATCH_STRATEGY_EXACT);
-                break;
+                    break;
                 case 1:
                     // 前缀匹配
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_MATCH_STRATEGY_PREFIX);
-                break;
+                    break;
                 case 2:
                     // 正则匹配
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_MATCH_STRATEGY_REGEX);
-                break;
+                    break;
                 case 3:
                     // 子串匹配
                     gatewayParamFlowItem.setParseStrategy(SentinelGatewayConstants.PARAM_MATCH_STRATEGY_CONTAINS);
-                break;
+                    break;
             }
         }
         flowRule.setParamItem(gatewayParamFlowItem);

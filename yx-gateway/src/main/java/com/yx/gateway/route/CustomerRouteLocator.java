@@ -51,11 +51,20 @@ public class CustomerRouteLocator {
         }
     }
 
+    /**
+     * 路由配置
+     *
+     * @param builder
+     * @return
+     */
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         RouteLocatorBuilder.Builder routesBuilder = builder.routes();
+        //读取json路由规则，转换为一条条route
+        //路由规则：[{"id":"route_id@register_to_st-uer","desc":"所有注册相关接口转发到st-user服务","path":"/api/gl/register/**","uri":"lb://st-user","predicates":{"type":"header","param":[{"name":"auth","value":"123fr"}]}}]
         for (int i = 0, len = routeRule.size(); i < len; i++) {
             JSONObject ruleObj = routeRule.getJSONObject(i);
+            //如下代码实现效果：routesBuilder.route("host_route02", r -> r.path("/a/**").uri("http://localhost:2006"))
             routesBuilder.route(ruleObj.getString("id"), r -> {
                 // 添加拦截路径
                 r.path(ruleObj.getString("path"));
@@ -74,21 +83,20 @@ public class CustomerRouteLocator {
                             JSONArray queryParamArray = predicatesObj.getJSONArray("param");
                             for (int j = 0, jlen = queryParamArray.size(); j < jlen; j++) {
                                 JSONObject queryParamObj = queryParamArray.getJSONObject(j);
-                                r.predicate(getQueryPredicate(queryParamObj.getString("name"), queryParamObj.getString("value")));
+                                r.predicate(this.getQueryPredicate(queryParamObj.getString("name"), queryParamObj.getString("value")));
                             }
-                        break;
+                            break;
                         // 基于Header参数的匹配
                         case "header":
                             JSONArray headerParamArray = predicatesObj.getJSONArray("param");
                             for (int j = 0, jlen = headerParamArray.size(); j < jlen; j++) {
                                 JSONObject headerParamObj = headerParamArray.getJSONObject(j);
-                                r.predicate(getHeaderPredicate(headerParamObj.getString("name"), headerParamObj.getString("value")));
+                                r.predicate(this.getHeaderPredicate(headerParamObj.getString("name"), headerParamObj.getString("value")));
                             }
-                        break;
+                            break;
                         // 重定向请求
                         case "redirect":
-
-                        break;
+                            break;
                     }
                 }
                 return r.uri(uri);
@@ -97,6 +105,13 @@ public class CustomerRouteLocator {
         return routesBuilder.build();
     }
 
+    /**
+     * 基于param的路由断言匹配
+     *     <br> 对表单或者get方式请求生效
+     * @param param
+     * @param regexp
+     * @return
+     */
     private Predicate<ServerWebExchange> getQueryPredicate(final String param, final String regexp) {
         return new GatewayPredicate() {
             @Override
@@ -109,6 +124,7 @@ public class CustomerRouteLocator {
                     return false;
                 }
                 for (String value : values) {
+                    //正则匹配
                     if (value != null && value.matches(regexp)) {
                         return true;
                     }
@@ -123,6 +139,13 @@ public class CustomerRouteLocator {
         };
     }
 
+    /**
+     * 基于head的路由断言匹配
+     *
+     * @param param
+     * @param regexp
+     * @return
+     */
     private Predicate<ServerWebExchange> getHeaderPredicate(final String param, final String regexp) {
         boolean hasRegex = StringUtils.hasText(regexp);
         return new GatewayPredicate() {
@@ -137,6 +160,7 @@ public class CustomerRouteLocator {
                 }
                 return true;
             }
+
             @Override
             public String toString() {
                 return String.format("Header: %s regexp=%s", param, regexp);

@@ -1,4 +1,4 @@
-package com.yx.gateway.config;
+package com.yx.forehead.gateway.config;
 
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants;
@@ -18,7 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;
-import com.yx.gateway.handler.CustomerBlockRequestHandler;
+import com.yx.forehead.gateway.handler.CustomerBlockRequestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;

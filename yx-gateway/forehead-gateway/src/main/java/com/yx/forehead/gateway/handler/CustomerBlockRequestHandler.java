@@ -1,4 +1,4 @@
-package com.yx.gateway.handler;
+package com.yx.forehead.gateway.handler;
 
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.yx.common.base.enums.EnumResponseCode;

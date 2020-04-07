@@ -16,6 +16,12 @@
     <name>yx-gateway</name>
     <description>Demo project for Spring Boot</description>
 
+    <!-- 被聚合的子模块索引 -->
+    <modules>
+        <module>forehead-gateway</module>
+        <module>backend-gateway</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package com.yx.gateway.route;
+package com.yx.forehead.gateway.route;
 
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.fastjson.JSONArray;

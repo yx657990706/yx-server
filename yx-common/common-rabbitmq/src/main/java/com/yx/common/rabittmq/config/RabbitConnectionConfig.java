@@ -76,6 +76,7 @@ public class RabbitConnectionConfig implements RabbitTemplate.ConfirmCallback, R
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         //设置消息发送ack，默认是none
         connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.CORRELATED);
+        //开启发布消息的Return监听
         connectionFactory.setPublisherReturns(true);
         return connectionFactory;
     }
@@ -86,9 +87,13 @@ public class RabbitConnectionConfig implements RabbitTemplate.ConfirmCallback, R
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(messageConverter);
+        //设置消费者的并发数量
         factory.setConcurrentConsumers(this.consumers);
+        //设置最大的并发数量
         factory.setMaxConcurrentConsumers(this.maxConsumers);
+        //设置消费者ack消息的模式，默认是自动，此处设置为手动
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        //设置单个消费请求能够处理的消息条数，默认250
         factory.setPrefetchCount(this.prefetchCount);
         factory.setReceiveTimeout(this.receiveTimeout);
         return factory;
@@ -98,9 +103,12 @@ public class RabbitConnectionConfig implements RabbitTemplate.ConfirmCallback, R
     public RabbitTemplate rabbitTemplate( @Qualifier("ReportMessageConverter") MessageConverter converter,
                                           @Qualifier("ReportConnectionFactory") ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        //开启消息传递过程中不可达目的地时将消息返回给生产者的功能
         template.setMandatory(true);
         template.setEncoding("UTF-8");
+        //消息不可达的回调
         template.setReturnCallback(this);
+        //消息投递回调
         template.setConfirmCallback(this);
         template.setMessageConverter(converter);
         return template;

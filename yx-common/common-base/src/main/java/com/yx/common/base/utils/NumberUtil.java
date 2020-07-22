@@ -1,5 +1,7 @@
 package com.yx.common.base.utils;
 
+import org.springframework.util.Assert;
+
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -19,6 +21,14 @@ import java.util.Random;
  * </pre>
  */
 public class NumberUtil {
+
+    private static final String upperCaseChar = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String lowerCaseChar = "0123456789abcdefghijklmnopqrstuvwxyz";
+    private static final String fixedLowerCaseChar = "23456789abcdefghijkmnpqrstuvwxyz";
+    private static String[] units =
+            {"", "十", "百", "千", "万", "十万", "百万", "千万", "亿", "十亿", "百亿", "千亿", "万亿"};
+    private static char[] numArray = {'零', '一', '二', '三', '四', '五', '六', '七', '八', '九'};
+
 
     /**
      * 获取6位验证码
@@ -108,10 +118,156 @@ public class NumberUtil {
 //        double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         return df.format(num);
     }
+    /**
+     * 数字转汉字
+     *
+     * @param num
+     * @return
+     */
+    public static String numToChinese(int num) {
+        char[] val = String.valueOf(num).toCharArray();
+        int len = val.length;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < val.length; i++) {
+            if (val[i] - 48 == 0) {
+                if (sb.length() == 0 || sb.lastIndexOf("零") != sb.length() - 1) {
+                    sb.append(numArray[0]);
+                }
+            } else {
+                sb.append(numArray[val[i] - 48]);
+                sb.append(units[len - i - 1]);
+            }
+        }
+        if (sb.indexOf("一十") == 0) {
+            sb.deleteCharAt(0);
+        }
+        if (sb.length() > 1 && sb.indexOf("零") == sb.length() - 1) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 将数字转换成小写字符串
+     *
+     * @param num
+     * @param len
+     * @return
+     */
+    public static String numToLowerString(long num, int len) {
+        StringBuilder sb = new StringBuilder();
+        Assert.state(num > 0,"数字要大于0");
+        while (num > 0) {
+            sb.insert(0, lowerCaseChar.charAt((int) (num % lowerCaseChar.length())));
+            num = num / lowerCaseChar.length();
+        }
+        int length = sb.length();
+        for (int i = 0; i < len - length; i++) {
+            sb.insert(0, "0");
+        }
+        return sb.toString();
+    }
+
+    public static String numToFixedLowerString(long num, int len) {
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            sb.insert(0, fixedLowerCaseChar.charAt((int) (num % fixedLowerCaseChar.length())));
+            num = num / fixedLowerCaseChar.length();
+        }
+        int length = sb.length();
+        for (int i = 0; i < len - length; i++) {
+            sb.insert(0, "0");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * numToLowerString 的反函数
+     */
+    public static long lowerStringToNum(String lowerString) {
+
+        long total = 0L;
+        for (char c : lowerString.toCharArray()) {
+            int charIndex = lowerCaseChar.indexOf(c);
+            if (lowerCaseChar.indexOf(c) == -1) {
+                throw new IllegalArgumentException("不合法字串: " + lowerString);
+            }
+
+            total *= lowerCaseChar.length();
+            total += charIndex;
+        }
+
+        return total;
+    }
+
+    /**
+     * 将数字转换成大写字符串
+     *
+     * @param num
+     * @param len
+     * @return
+     */
+    public static String numToUpperString(long num, int len) {
+        StringBuilder sb = new StringBuilder();
+        while (num > 0 && sb.length() < len) {
+            sb.insert(0, upperCaseChar.charAt((int) (num % upperCaseChar.length())));
+            num = num / upperCaseChar.length();
+        }
+        int length = sb.length();
+        for (int i = 0; i < len - length; i++) {
+            sb.insert(0, "0");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 获取修正后的字符
+     *
+     * @param str
+     * @param len
+     * @return
+     */
+    public static String getFixedLowerString(String str, int len) {
+        StringBuilder sb = new StringBuilder();
+        int idx = 0;
+        while (sb.length() < len && idx < str.length()) {
+            if (fixedLowerCaseChar.contains(str.charAt(idx) + "")) {
+                sb.append(str.charAt(idx));
+            }
+            idx++;
+        }
+        int length = sb.length();
+        for (int i = 0; i < len - length; i++) {
+            sb.insert(0, "0");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 将数字转换成6位大写字符串
+     *
+     * @param num
+     * @return
+     */
+    public static String numToSixUpperString(long num) {
+        return numToUpperString(num, 6);
+    }
+
+    /**
+     * 将数字转换成6位小写字符串
+     *
+     * @param num
+     * @return
+     */
+    public static String numToSixLowerString(long num) {
+        return numToLowerString(num, 6);
+    }
 
     public static void main(String[] args) {
         getTwoDecimalNumber(1234.0);
         System.out.println("密码===>>"+randomPassword(6));
         System.out.println("随机数===>>"+randomString(6));
+        System.out.println("6位大写===>>"+numToSixUpperString(System.currentTimeMillis()));
+        System.out.println("6位小写===>>"+numToSixLowerString(System.currentTimeMillis()));
     }
 }
